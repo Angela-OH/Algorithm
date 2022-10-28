@@ -35,5 +35,3 @@ while True:
                     connect[n * i + j].append((arr[x][y], x * n + y))
 
     print("Problem {}: {}".format(index, dijkstra(0, n * n - 1)))
-
-        
