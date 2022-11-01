@@ -13,7 +13,6 @@ def prim(start):
 
     while heap:
         i, j = heapq.heappop(heap)
-        print(j + 1, i)
         if visited[j] != 0:
             continue
         visited[j] = 1
