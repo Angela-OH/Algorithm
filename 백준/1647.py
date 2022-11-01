@@ -1,6 +1,5 @@
 import sys
 input = sys.stdin.readline
-sys.setrecursionlimit(10**5)
 
 def find(k):
     if parent[k] == k:
