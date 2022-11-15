@@ -1,0 +1,26 @@
+def change_number(n, k):
+    num, index = 0, 0
+    while n >= k:
+        num += (n % k) * pow(10, index)
+        n = n // k
+        index += 1
+    num += n * pow(10, index)
+    return num
+
+def isPrime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(n**0.5)+1):
+        if n % i == 0:
+            return False
+    return True
+
+def solution(n, k):
+    answer = 0
+    num = str(change_number(n, k)).split('0')
+    for n in num:
+        if not n:
+            continue
+        if isPrime(int(n)):
+            answer += 1
+    return answer
