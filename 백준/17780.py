@@ -50,7 +50,7 @@ def main():
                         checked = 1
                         continue
                 location[new_x][new_y].extend(move_horse)
-                if len(location[new_x][new_y]) == 4:
+                if len(location[new_x][new_y]) >= 4:
                     return turn
                 location[x][y] = []
     return -1
