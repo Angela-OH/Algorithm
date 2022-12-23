@@ -15,7 +15,7 @@ if __name__ == "__main__":
     dp[0] = 1
     money = [1, 2, 3]
     for m in money:
-        for d in range(m, n + 1):
+        for d in range(m, max + 1):
             dp[d] += dp[d - m]
     
     for i in inputs:
