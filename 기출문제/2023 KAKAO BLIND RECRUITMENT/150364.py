@@ -13,7 +13,7 @@ def solution(edges, target):
         if len(edge[i]) >= 1: # 자식 노드가 있음
             edge[i].sort()
             path[i] = 0 # 길 표시 (0부터 시작)
-        else: # 자식 노드가 없음 => 리프 노드
+        elif target[i] != 0: # 자식 노드가 없음 => 리프 노드
             leaf_cnt += 1 # 리프 노드 개수 기억해두기
 
     cnt = 0
@@ -53,7 +53,3 @@ def solution(edges, target):
                     break
             
     return answer
-
-print(solution([[2, 4], [1, 2], [6, 11], [1, 3], [5, 7], [2, 5], [3, 6], [6, 10], [6, 9], [5, 8]], [0, 0, 0, 3, 0, 0, 1, 2, 2, 2, 3]))
-print(solution([[1, 2]], [0, 7]))
-print(solution([[8, 11], [1, 2], [2, 3], [2, 4], [3, 6], [3, 5], [4, 7], [4, 8], [5, 9], [5, 10]], [0, 0, 0, 0, 0, 3, 4, 0, 5, 3, 5]))
