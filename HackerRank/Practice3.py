@@ -1,4 +1,3 @@
-# Multi Dimensional Selection
 #!/bin/python3
 
 import math
@@ -8,7 +7,6 @@ import re
 import sys
 
 
-
 #
 # Complete the 'getMaxProduct' function below.
 #
@@ -16,61 +14,43 @@ import sys
 # The function accepts 2D_INTEGER_ARRAY arr as parameter.
 #
 
-INF = sys.maxsize
-k = INF
-res = []
-
-def find(arr, n, m, h, min_v, max_v, i):
-    global k
-    if i == n:
-        val = max_v - min_v
-        if val <= k:
-            if val < k:
-                k = val
-                res.clear()
-            res.append((min_v, max_v))
-        return
-    
-    gap = INF
-    left, right = 0, 0
-    for j in range(0, m - h):
-        v = max(abs(max_v - arr[i][j]), abs(arr[i][j + h] - min_v))
-        
-        if v <= gap:
-            gap = v
-            left, right = j, j + h
-       
-    find(arr, n, m, h, min(min_v, arr[i][left]), max(max_v, arr[i][right]), i + 1)
-
 def getMaxProduct(arr):
     # Write your code here
-    min_v, max_v = INF, -INF
-    cnt, n, m = 0, len(arr), len(arr[0])
-    l, r = math.ceil(m/2) - 1, m - math.ceil(m/2)
-    h = math.ceil(m/2) - 1
+    n, m = len(arr), len(arr[0])
+    h = math.ceil(m / 2)
+    cnt = [0 for _ in range(n)] # check count per row
+    info = []
+    k, num, row = sys.maxsize, 0, n
     
-    for a in arr:
-        a.sort()
+    for i in range(n):
+        for a in arr[i]:
+            info.append((a, i))
+    info.sort()
     
-    for i in range(0, m - h):
-        find(arr, n, m, h, arr[0][i], arr[0][i + h], 1)
-    # select left (1st row)
-    #find(arr, n, l, r, arr[0][0], arr[0][l], 1)
- 
-    # select right (1st row)
-    #find(arr, n, l, r, arr[0][r], arr[0][-1], 1)
-    
-    for r in res:
-        sum = 0
-        for ar in arr:
-            for a in ar:
-                if r[0] <= a <= r[1]:
-                    sum += 1
-                if a > r[1]: break
-        cnt = max(cnt, sum)
-    
-    return k * cnt
-
+    j = 0
+    for i in range(len(info)): # start point
+        while j < len(info) and row > 0: # sliding
+            cnt[info[j][1]] += 1
+            if (cnt[info[j][1]] == h): row -= 1
+            j += 1
+        if row == 0: # satisfy the requirements
+            tmp = info[j - 1][0] # latest val
+            while j < len(info) and info[j][0] == tmp:
+                cnt[info[j][1]] += 1
+                j += 1
+            val = info[j - 1][0] - info[i][0]
+            if val < k:
+                k = val
+                num = j - i
+            elif val == k:
+                num = max(num, j - i)
+        
+        # undo
+        if cnt[info[i][1]] == h: 
+            row += 1
+        cnt[info[i][1]] -= 1        
+                    
+    return k * num
 if __name__ == '__main__':
     fptr = open(os.environ['OUTPUT_PATH'], 'w')
 
